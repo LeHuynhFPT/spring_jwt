@@ -51,7 +51,10 @@ public class AuthenController {
             if (userService.findUserByUsername(userDTO.getUsername()) != null) {
                 return "Tên người dùng đã tồn tại, vui lòng chọn một tên người dùng khác";
             }
-            User user = new User(userDTO.getUsername(), bCryptPasswordEncoder.encode(userDTO.getPassword()));
+            User user = new User();
+            user.setUsername(userDTO.getUsername());
+            user.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
+            user.setRoles(new HashSet<>());
             userService.createAccount(user);
             return "Tạo tài khoản thành công";
 
